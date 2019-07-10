@@ -19,6 +19,7 @@
     "build:cmjs": "tsc -P tsconfig.json",
     "build:es6": "tsc -P tsconfig.json --module ES6 --outDir dist/es6",
     "clean": "rimraf ./dist",
+    "prepublish": "npm run build",
     "build": "npm run clean & npm run build:cmjs & npm run build:es6",
     "pub": "npm publish --scope --access public",
     "docs": "typedoc src --out docs --exclude \"**/tests/*.ts\"",
