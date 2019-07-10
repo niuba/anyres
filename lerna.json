@@ -4,9 +4,12 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["ignored-file", "*.md"],
+      "ignoreChanges": [
+        "ignored-file",
+        "*.md"
+      ],
       "message": "chore(release): publish"
     }
   },
-  "version": "1.0.0-alpha.1"
+  "version": "1.0.0-alpha.2"
 }
