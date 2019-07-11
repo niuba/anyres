@@ -22,10 +22,10 @@ export interface ICacheStore {
 }
 
 export enum CacheNotifyTypeEnum {
-  Init = "init",
-  Set = "set",
-  Remove = "remove",
-  Expire = "expire",
+  Init = 'init',
+  Set = 'set',
+  Remove = 'remove',
+  Expire = 'expire',
 }
 
 export interface ICacheNotifyResult<T> {

@@ -1,5 +1,5 @@
-import { empty, of } from "rxjs";
-import { ICache, ICacheStore } from "../interfaces";
+import { empty, of } from 'rxjs';
+import { ICacheStore } from '../interfaces';
 
 export class MemoryStore implements ICacheStore {
   private store: Map<string, any> = new Map();

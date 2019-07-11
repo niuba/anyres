@@ -1,24 +1,34 @@
-import { IAnyresRequestOptions, IAnyresResponse, IHttpAdapter } from "@anyres/core";
-import { Observable, of as observableOf } from "rxjs";
+import {
+  IAnyresRequestOptions,
+  IAnyresResponse,
+  IHttpAdapter,
+} from '@anyres/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 export class MockHttpAdapter implements IHttpAdapter {
-  public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
+  public get(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
     return observableOf({
       status: 200,
       headers: {},
       body: {
         id: 1,
-        title: "title",
+        title: 'title',
       },
       json: () => {
         return {
           id: 1,
-          title: "title",
+          title: 'title',
         };
       },
     });
   }
-  public post(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
+  public post(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
     return observableOf({
       status: 201,
       headers: {},
@@ -34,7 +44,10 @@ export class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public put(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
+  public put(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
     return observableOf({
       status: 200,
       headers: {},
@@ -48,7 +61,10 @@ export class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public delete(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
+  public delete(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
     return observableOf({
       status: 204,
       headers: {},
@@ -58,7 +74,10 @@ export class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public patch(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
+  public patch(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
     return observableOf({
       status: 200,
       headers: {},

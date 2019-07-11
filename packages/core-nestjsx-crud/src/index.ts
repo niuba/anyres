@@ -1,1 +1,1 @@
-export * from "./AnyresNestjsxCRUD";
+export * from './AnyresNestjsxCRUD';

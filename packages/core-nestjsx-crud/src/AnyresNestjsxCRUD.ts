@@ -1,23 +1,23 @@
-import { AnyresCRUD } from "@anyres/core";
-import { Observable, throwError } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
+import { AnyresCRUD } from '@anyres/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 export enum FilterConditionEnum {
-  eq = "eq", // (=, equal)
-  ne = "ne", // (!=, not equal)
-  gt = "gt", // (>, greater than)
-  lt = "lt", // (<, lower that)
-  gte = "gte", // (>=, greater than or equal)
-  lte = "lte", // (<=, lower than or equal)
-  starts = "starts", // (LIKE val%, starts with)
-  ends = "ends", // (LIKE %val, ends with)
-  cont = "cont", // (LIKE %val%, contains)
-  excl = "excl", // (NOT LIKE %val%, not contains)
-  in = "in", // (IN, in range, accepts multiple values)
-  notin = "notin", // (NOT IN, not in range, accepts multiple values)
-  isnull = "isnull", // (IS NULL, is NULL, doesn't accept value)
-  notnull = "notnull", // (IS NOT NULL, not NULL, doesn't accept value)
-  between = "between" // (BETWEEN, between, accepts two values)
+  eq = 'eq', // (=, equal)
+  ne = 'ne', // (!=, not equal)
+  gt = 'gt', // (>, greater than)
+  lt = 'lt', // (<, lower that)
+  gte = 'gte', // (>=, greater than or equal)
+  lte = 'lte', // (<=, lower than or equal)
+  starts = 'starts', // (LIKE val%, starts with)
+  ends = 'ends', // (LIKE %val, ends with)
+  cont = 'cont', // (LIKE %val%, contains)
+  excl = 'excl', // (NOT LIKE %val%, not contains)
+  in = 'in', // (IN, in range, accepts multiple values)
+  notin = 'notin', // (NOT IN, not in range, accepts multiple values)
+  isnull = 'isnull', // (IS NULL, is NULL, doesn't accept value)
+  notnull = 'notnull', // (IS NOT NULL, not NULL, doesn't accept value)
+  between = 'between', // (BETWEEN, between, accepts two values)
 }
 
 export interface IFilter<T> {
@@ -28,7 +28,7 @@ export interface IFilter<T> {
 
 export interface ISort<T> {
   field: T;
-  by: "DESC" | "ASC";
+  by: 'DESC' | 'ASC';
 }
 
 export interface IJoin {
@@ -70,9 +70,9 @@ export class AnyresNestjsxCRUD<
 > extends AnyresCRUD<TQ, INestjsxResQueryResult<TG>, TG, TC, TU> {
   public formatFields<T>(query: { fields?: Array<keyof T> }): string {
     if (query && query.fields) {
-      return `fields=${query.fields.join(",")}`;
+      return `fields=${query.fields.join(',')}`;
     } else {
-      return "";
+      return '';
     }
   }
 
@@ -80,60 +80,60 @@ export class AnyresNestjsxCRUD<
     if (query && query.filter) {
       return query.filter
         .map(
-          filter =>
-            `filter=${filter.field}||${filter.condition}||${filter.value}`
+          (filter) =>
+            `filter=${filter.field}||${filter.condition}||${filter.value}`,
         )
-        .join("&");
+        .join('&');
     } else {
-      return "";
+      return '';
     }
   }
   public formatOr<T>(query: { or?: Array<IFilter<keyof T>> }) {
     if (query && query.or) {
       return query.or
-        .map(or => `or=${or.field}||${or.condition}||${or.value}`)
-        .join("&");
+        .map((or) => `or=${or.field}||${or.condition}||${or.value}`)
+        .join('&');
     } else {
-      return "";
+      return '';
     }
   }
   public formatSort<T>(query: { sort?: Array<ISort<keyof T>> }) {
     if (query && query.sort) {
-      return query.sort.map(sort => `sort=${sort.field},${sort.by}`).join("&");
+      return query.sort.map((sort) => `sort=${sort.field},${sort.by}`).join('&');
     } else {
-      return "";
+      return '';
     }
   }
   public formatJoin(query: { join?: IJoin[] }) {
     if (query && query.join) {
       return query.join
-        .map(join => {
+        .map((join) => {
           if (join.fields) {
-            return `join=${join.relation}||${join.fields.join(",")}`;
+            return `join=${join.relation}||${join.fields.join(',')}`;
           } else {
             return `join=${join.relation}`;
           }
         })
-        .join("&");
+        .join('&');
     } else {
-      return "";
+      return '';
     }
   }
   public createMany(res: TC[]): Observable<TG[]> {
     return this.getHeaders$().pipe(
-      switchMap(headers => {
+      switchMap((headers) => {
         return this.httpAdapter.post(`${this.path}/bulk`, {
           body: {
-            bulk: res
+            bulk: res,
           },
-          headers
+          headers,
         });
       }),
-      map(response => response.json() as TG[]),
+      map((response) => response.json() as TG[]),
       catchError((err: any) => {
         this.errorHandler(err);
         return throwError(err);
-      })
+      }),
     );
   }
   public get(
@@ -141,52 +141,52 @@ export class AnyresNestjsxCRUD<
     query?: {
       fields?: Array<keyof TG>;
       join?: IJoin[];
-    }
+    },
   ): Observable<TG> {
     return this.getHeaders$().pipe(
-      switchMap(headers => {
+      switchMap((headers) => {
         return this.httpAdapter.get(
           `${this.path}/${id}?${this.formatFields(query)}&${this.formatJoin(
-            query
+            query,
           )}`,
           {
-            headers
-          }
+            headers,
+          },
         );
       }),
-      map(response => response.json() as TG),
+      map((response) => response.json() as TG),
       catchError((err: any) => {
         this.errorHandler(err);
         return throwError(err);
-      })
+      }),
     );
   }
 
   public query(query?: TQ): Observable<INestjsxResQueryResult<TG>> {
     return this.getHeaders$().pipe(
-      switchMap(headers => {
+      switchMap((headers) => {
         return this.httpAdapter.get(
           `${this.path}?${this.formatFields(query)}&${this.formatJoin(
-            query
+            query,
           )}&${this.formatFilter(query)}&${this.formatOr(
-            query
+            query,
           )}&${this.formatSort(query)}`,
           {
             params: {
-              limit: query.limit ? query.limit : "",
-              offset: query.offset ? query.offset : "",
-              page: query.page ? query.page : "",
-              cache: query.cache ? query.cache : ""
+              limit: query.limit ? query.limit : '',
+              offset: query.offset ? query.offset : '',
+              page: query.page ? query.page : '',
+              cache: query.cache ? query.cache : '',
             },
-            headers
-          }
+            headers,
+          },
         );
       }),
-      map(response => response.json() as INestjsxResQueryResult<TG>),
+      map((response) => response.json() as INestjsxResQueryResult<TG>),
       catchError((err: any) => {
         this.errorHandler(err);
         return throwError(err);
-      })
+      }),
     );
   }
 }

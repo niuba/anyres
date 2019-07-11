@@ -1,6 +1,6 @@
-import { Anyres } from "@anyres/core";
-import { AnyresDRFCRUD, IDRFResQuery } from "..";
-import { MockHttpAdapter } from "./MockHttpAdapter";
+import { Anyres } from '@anyres/core';
+import { AnyresDRFCRUD, IDRFResQuery } from '..';
+import { MockHttpAdapter } from './MockHttpAdapter';
 
 export interface IPostQuery extends IDRFResQuery<IPostGet> {
 }
@@ -16,7 +16,7 @@ export interface IPostUpdate {
 }
 
 @Anyres({
-  path: "http://localhost:3000/posts",
+  path: 'http://localhost:3000/posts',
   httpAdapterStatic: new MockHttpAdapter(),
 })
 class TestRes extends AnyresDRFCRUD<
@@ -28,30 +28,30 @@ IPostUpdate
 
 }
 
-describe("test MockAdapter", () => {
+describe('test MockAdapter', () => {
   const testRes = new TestRes();
 
-  test("create", () => {
+  test('create', () => {
     return testRes.create({
-      title: "new title",
+      title: 'new title',
     }).toPromise().then((data) => {
       expect(data.id).toBe(2);
-      expect(data.title).toBe("new title");
+      expect(data.title).toBe('new title');
     });
   });
-  test("get", () => {
+  test('get', () => {
     return testRes.get(1).toPromise().then((data) => {
       expect(data.id).toBe(1);
-      expect(data.title).toBe("title");
+      expect(data.title).toBe('title');
     });
   });
-  test("update", () => {
+  test('update', () => {
     return testRes.update({
       id: 1,
-      title: "change title",
+      title: 'change title',
     }).toPromise().then((data) => {
       expect(data.id).toBe(1);
-      expect(data.title).toBe("change title");
+      expect(data.title).toBe('change title');
     });
   });
 });

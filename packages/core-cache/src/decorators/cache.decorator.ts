@@ -5,8 +5,8 @@ import {
   IResQuery,
   IResQueryResult,
   IResUpdate,
-} from "@anyres/core";
-import { ICacheParams } from "../interfaces";
+} from '@anyres/core';
+import { ICacheParams } from '../interfaces';
 
 export function Cache({ store, expire = 0 }: ICacheParams) {
   return <

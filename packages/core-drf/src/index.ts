@@ -1,1 +1,1 @@
-export * from "./AnyresDRFCRUD";
+export * from './AnyresDRFCRUD';

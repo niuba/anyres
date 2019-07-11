@@ -5,12 +5,12 @@ import {
   IAnyresRequestOptions,
   IAnyresResponse,
   IHttpAdapter,
-} from "@anyres/core";
-import * as localForage from "localforage";
-import { Observable, of as observableOf } from "rxjs";
-import { CacheStore } from "../cache-store";
-import { Cache, CustomCache } from "../decorators";
-import { ICache } from "../interfaces";
+} from '@anyres/core';
+import * as localForage from 'localforage';
+import { Observable, of as observableOf } from 'rxjs';
+import { CacheStore } from '../cache-store';
+import { Cache, CustomCache } from '../decorators';
+import { ICache } from '../interfaces';
 
 class MockHttpAdapter implements IHttpAdapter {
   public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
@@ -19,12 +19,12 @@ class MockHttpAdapter implements IHttpAdapter {
       headers: {},
       body: {
         id: 1,
-        title: "title",
+        title: 'title',
       },
       json: () => {
         return {
           id: 1,
-          title: "title",
+          title: 'title',
         };
       },
     });
@@ -107,11 +107,11 @@ localForage.config({
     localForage.WEBSQL,
     localForage.LOCALSTORAGE,
   ], // Force WebSQL; same as using setDriver()
-  name: "myApp",
+  name: 'myApp',
   version: 1.0,
   size: 4980736, // Size of database, in bytes. WebSQL-only for now.
-  storeName: "keyvaluepairs", // Should be alphanumeric, with underscores.
-  description: "some description",
+  storeName: 'keyvaluepairs', // Should be alphanumeric, with underscores.
+  description: 'some description',
 });
 const cacheStore = new CacheStore(localForage);
 // tslint:disable-next-line:max-classes-per-file
@@ -119,7 +119,7 @@ const cacheStore = new CacheStore(localForage);
   store: cacheStore,
 })
 @Anyres({
-  path: "http://localhost:3000/posts",
+  path: 'http://localhost:3000/posts',
   httpAdapterStatic: new MockHttpAdapter(),
   forbiddenMethods: [
     HttpMethod.Query,
@@ -141,29 +141,29 @@ IPostUpdate
   }
 }
 
-describe("test MockAdapter", () => {
+describe('test MockAdapter', () => {
   const testRes = new TestRes();
 
-  test("get", () => {
+  test('get', () => {
     return testRes.get(1).toPromise().then((data) => {
       expect(data.id).toBe(1);
-      expect(data.title).toBe("title");
-      return localForage.getItem<ICache<IPostGet>>("http://localhost:3000/posts/1");
+      expect(data.title).toBe('title');
+      return localForage.getItem<ICache<IPostGet>>('http://localhost:3000/posts/1');
     }).then((keys) => {
       expect(keys.v.id).toBe(1);
     });
   });
-  test("customMethod", () => {
+  test('customMethod', () => {
     return testRes.customMethod(1).toPromise().then((data) => {
       expect(data.id).toBe(1);
-      expect(data.title).toBe("title");
-      return localForage.getItem<ICache<IPostGet>>("1");
+      expect(data.title).toBe('title');
+      return localForage.getItem<ICache<IPostGet>>('1');
     }).then((item) => {
       expect(item.v.id).toBe(1);
       return testRes.customMethod(1).toPromise();
     }).then((data) => {
       expect(data.id).toBe(1);
-      expect(data.title).toBe("title");
+      expect(data.title).toBe('title');
       localForage.iterate((value, key, iterationNumber) => {
         //
       }).then((x) => {
@@ -174,7 +174,7 @@ describe("test MockAdapter", () => {
           return [key, value];
         }
       }).then((x) => {
-        expect(x[0]).toBe("1");
+        expect(x[0]).toBe('1');
       });
     });
   });

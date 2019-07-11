@@ -1,18 +1,27 @@
-
-import { BehaviorSubject, from, Observable, of, pipe, Subscription, timer } from "rxjs";
-import { filter, map, switchMap, take, tap } from "rxjs/operators";
-import { CacheNotifyTypeEnum, ICache, ICacheNotifyResult, ICacheStore } from "./interfaces";
+import {
+  BehaviorSubject,
+  from,
+  Observable,
+  of,
+  Subscription,
+  timer,
+} from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import {
+  CacheNotifyTypeEnum,
+  ICache,
+  ICacheNotifyResult,
+  ICacheStore,
+} from './interfaces';
 
 export class CacheStore {
   public expireSubscription: Subscription;
   public freqTick: number = 3000;
-  private readonly notifyBuffer: Map<string, BehaviorSubject<ICacheNotifyResult<any>>> = new Map<
+  private readonly notifyBuffer: Map<
     string,
     BehaviorSubject<ICacheNotifyResult<any>>
-  >();
-  constructor(
-    private readonly cacheStore: ICacheStore,
-  ) {
+  > = new Map<string, BehaviorSubject<ICacheNotifyResult<any>>>();
+  constructor(private readonly cacheStore: ICacheStore) {
     this.runExpireNotify();
   }
   set freq(value: number) {
@@ -25,23 +34,22 @@ export class CacheStore {
     source: Observable<T> = null,
     expire: number = 0,
   ): Observable<T> {
-    return from(this.cacheStore.getItem<ICache<T>>(key))
-      .pipe(
-        switchMap((item) => {
-          if (item) {
-            if (item.e === 0) {
-              return of(item.v);
-            } else if (item.e > (new Date()).getTime()) {
-              return of(item.v);
-            }
+    return from(this.cacheStore.getItem<ICache<T>>(key)).pipe(
+      switchMap((item) => {
+        if (item) {
+          if (item.e === 0) {
+            return of(item.v);
+          } else if (item.e > new Date().getTime()) {
+            return of(item.v);
           }
-          if (source === null) {
-            return of(null);
-          } else {
-            return this.set(key, source, expire);
-          }
-        }),
-      );
+        }
+        if (source === null) {
+          return of(null);
+        } else {
+          return this.set(key, source, expire);
+        }
+      }),
+    );
   }
 
   public set<T>(
@@ -59,10 +67,12 @@ export class CacheStore {
     const set$ = v$.pipe(
       take(1),
       switchMap((v) => {
-        return from(this.cacheStore.setItem<ICache<T>>(key, {
-          v,
-          e: expire === 0 ? 0 : expire * 1000 + (new Date()).getTime(),
-        }));
+        return from(
+          this.cacheStore.setItem<ICache<T>>(key, {
+            v,
+            e: expire === 0 ? 0 : expire * 1000 + new Date().getTime(),
+          }),
+        );
       }),
       tap(() => this.runNotify(key, CacheNotifyTypeEnum.Set).then()),
       map((item) => item.v),
@@ -91,7 +101,9 @@ export class CacheStore {
   }
 
   public async clear() {
-    this.notifyBuffer.forEach((v, k) => this.runNotify(k, CacheNotifyTypeEnum.Remove).then());
+    this.notifyBuffer.forEach((v, k) =>
+      this.runNotify(k, CacheNotifyTypeEnum.Remove).then(),
+    );
     await this.cacheStore.clear();
   }
 
@@ -107,7 +119,9 @@ export class CacheStore {
   }
 
   public cancelNotify(key: string): void {
-    if (!this.notifyBuffer.has(key)) { return; }
+    if (!this.notifyBuffer.has(key)) {
+      return;
+    }
     this.notifyBuffer.get(key).unsubscribe();
     this.notifyBuffer.delete(key);
   }
@@ -131,15 +145,20 @@ export class CacheStore {
     this.expireSubscription = timer(0, this.freqTick)
       .pipe(
         switchMap(() => {
-          const now = (new Date()).getTime();
-          return from(this.cacheStore.iterate<ICache<any>, any>((value, key, iterationNumber) => {
-            if (value.e !== 0 && value.e < now) {
-              this.cacheStore.removeItem(key).then();
-              this.runNotify(key, CacheNotifyTypeEnum.Expire).then();
-            }
-          }));
+          const now = new Date().getTime();
+          return from(
+            this.cacheStore.iterate<ICache<any>, any>(
+              (value, key, iterationNumber) => {
+                if (value.e !== 0 && value.e < now) {
+                  this.cacheStore.removeItem(key).then();
+                  this.runNotify(key, CacheNotifyTypeEnum.Expire).then();
+                }
+              },
+            ),
+          );
         }),
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   private abortExpireNotify() {
@@ -153,7 +172,8 @@ export class CacheStore {
       return;
     }
     this.notifyBuffer.get(key).next({
-      type, value: await this.get(key).toPromise(),
+      type,
+      value: await this.get(key).toPromise(),
     });
   }
 }

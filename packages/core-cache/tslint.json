@@ -23,6 +23,10 @@
       ]
     },
     "object-literal-sort-keys": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
     "no-empty-interface": false
   }
 }

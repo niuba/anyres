@@ -1,6 +1,6 @@
 
-import { Observable } from "rxjs";
-import { ICacheParams } from "../interfaces";
+import { Observable } from 'rxjs';
+import { ICacheParams } from '../interfaces';
 
 export function CustomCache<
   TI extends any[],

@@ -1,3 +1,3 @@
-export * from "./Anyres";
-export * from "./AnyresCRUD";
-export * from "./HttpAdapter";
+export * from './Anyres';
+export * from './AnyresCRUD';
+export * from './HttpAdapter';

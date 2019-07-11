@@ -1,26 +1,37 @@
-import { Observable, of as observableOf } from "rxjs";
-import { Anyres, AnyresCRUD, IAnyresRequestOptions, IAnyresResponse, IHttpAdapter } from "..";
-import { HttpMethod } from "../AnyresCRUD";
+import { Observable, of } from 'rxjs';
+import { Anyres } from '../Anyres';
+import { AnyresCRUD, HttpMethod } from '../AnyresCRUD';
+import {
+  IAnyresRequestOptions,
+  IAnyresResponse,
+  IHttpAdapter,
+} from '../HttpAdapter';
 
 class MockHttpAdapter implements IHttpAdapter {
-  public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return observableOf({
+  public get(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
+    return of({
       status: 200,
       headers: {},
       body: {
         id: 1,
-        title: "title",
+        title: 'title',
       },
       json: () => {
         return {
           id: 1,
-          title: "title",
+          title: 'title',
         };
       },
     });
   }
-  public post(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return observableOf({
+  public post(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
+    return of({
       status: 201,
       headers: {},
       body: {
@@ -35,8 +46,11 @@ class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public put(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return observableOf({
+  public put(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
+    return of({
       status: 200,
       headers: {},
       body: {
@@ -49,8 +63,11 @@ class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public delete(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return observableOf({
+  public delete(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
+    return of({
       status: 204,
       headers: {},
       body: {},
@@ -59,8 +76,11 @@ class MockHttpAdapter implements IHttpAdapter {
       },
     });
   }
-  public patch(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
-    return observableOf({
+  public patch(
+    url: string,
+    options?: IAnyresRequestOptions,
+  ): Observable<IAnyresResponse> {
+    return of({
       status: 200,
       headers: {},
       body: {
@@ -75,17 +95,13 @@ class MockHttpAdapter implements IHttpAdapter {
   }
 }
 
-
-export interface IPostQuery {
-}
-export interface IPostQueryResult {
-}
+export interface IPostQuery {}
+export interface IPostQueryResult {}
 export interface IPostGet {
   id?: number;
   title?: string;
 }
-export interface IPostCreate {
-}
+export interface IPostCreate {}
 export interface IPostUpdate {
   id: string | number;
   title?: string;
@@ -93,56 +109,67 @@ export interface IPostUpdate {
 
 // tslint:disable-next-line:max-classes-per-file
 @Anyres({
-  path: "http://localhost:3000/posts",
+  path: 'http://localhost:3000/posts',
   httpAdapterStatic: new MockHttpAdapter(),
-  forbiddenMethods: [
-    HttpMethod.Query,
-  ],
+  forbiddenMethods: [HttpMethod.Query],
 })
 class TestRes extends AnyresCRUD<
-IPostQuery,
-IPostQueryResult,
-IPostGet,
-IPostCreate,
-IPostUpdate
-> {
+  IPostQuery,
+  IPostQueryResult,
+  IPostGet,
+  IPostCreate,
+  IPostUpdate
+> {}
 
-}
-
-describe("test MockAdapter", () => {
+describe('test MockAdapter', () => {
   const testRes = new TestRes();
 
-  test("create", () => {
-    return testRes.create({
-      title: "new title",
-    }).toPromise().then((data) => {
-      expect(data.id).toBe(2);
-      expect(data.title).toBe("new title");
-    });
+  test('create', () => {
+    return testRes
+      .create({
+        title: 'new title',
+      })
+      .toPromise()
+      .then((data) => {
+        expect(data.id).toBe(2);
+        expect(data.title).toBe('new title');
+      });
   });
-  test("get", () => {
-    return testRes.get(1).toPromise().then((data) => {
-      expect(data.id).toBe(1);
-      expect(data.title).toBe("title");
-    });
+  test('get', () => {
+    return testRes
+      .get(1)
+      .toPromise()
+      .then((data) => {
+        expect(data.id).toBe(1);
+        expect(data.title).toBe('title');
+      });
   });
-  test("update", () => {
-    return testRes.update({
-      id: 1,
-      title: "change title",
-    }).toPromise().then((data) => {
-      expect(data.id).toBe(1);
-      expect(data.title).toBe("change title");
-    });
+  test('update', () => {
+    return testRes
+      .update({
+        id: 1,
+        title: 'change title',
+      })
+      .toPromise()
+      .then((data) => {
+        expect(data.id).toBe(1);
+        expect(data.title).toBe('change title');
+      });
   });
-  test("remove", () => {
-    return testRes.remove(1).toPromise().then((data) => {
-      expect(data).toEqual({});
-    });
+  test('remove', () => {
+    return testRes
+      .remove(1)
+      .toPromise()
+      .then((data) => {
+        expect(data).toEqual({});
+      });
   });
-  test("query", () => {
-    return testRes.query().toPromise().then(null, (e) => {
-      expect(e.message).toBe(`query method forbidden`);
-    });
+  test('query', () => {
+    return testRes
+      .query()
+      .toPromise()
+      .then(null, (e) => {
+        expect(e.message).toBe(`query method forbidden`);
+      });
   });
 });

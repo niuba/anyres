@@ -1,29 +1,23 @@
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { IHttpAdapter } from './HttpAdapter';
 
-import { Observable, of, throwError } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
-import { IHttpAdapter } from "./HttpAdapter";
+export interface IResQuery {}
 
-export interface IResQuery {
-}
+export interface IResQueryResult {}
 
-export interface IResQueryResult {
-}
+export interface IResGet {}
 
-export interface IResGet {
-}
+export interface IResCreate {}
 
-export interface IResCreate {
-}
-
-export interface IResUpdate {
-}
+export interface IResUpdate {}
 
 export enum HttpMethod {
-  Create = "create",
-  Get = "get",
-  Update = "update",
-  Remove = "remove",
-  Query = "query",
+  Create = 'create',
+  Get = 'get',
+  Update = 'update',
+  Remove = 'remove',
+  Query = 'query',
 }
 
 export interface IAnyresParams {
@@ -34,12 +28,12 @@ export interface IAnyresParams {
 }
 
 export class AnyresCRUD<
-  TQ extends IResQuery= IResQuery,
-  TQR extends IResQueryResult= IResQueryResult,
-  TG extends IResGet= IResGet,
-  TC extends IResCreate= IResCreate,
-  TU extends IResUpdate= IResUpdate
-  > {
+  TQ extends IResQuery = IResQuery,
+  TQR extends IResQueryResult = IResQueryResult,
+  TG extends IResGet = IResGet,
+  TC extends IResCreate = IResCreate,
+  TU extends IResUpdate = IResUpdate
+> {
   public primaryKey: string;
   public path: string;
   public httpAdapterStatic: IHttpAdapter;
@@ -143,10 +137,10 @@ export class AnyresCRUD<
   }
 
   public getHeaders$(): Observable<{
-    [key: string]: string,
+    [key: string]: string;
   }> {
     return of({
-      "Content-type": "application/json",
+      'Content-type': 'application/json',
     });
   }
 }

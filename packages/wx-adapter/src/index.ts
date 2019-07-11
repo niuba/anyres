@@ -2,9 +2,9 @@ import {
   IAnyresRequestOptions,
   IAnyresResponse,
   IHttpAdapter,
-} from "@anyres/core";
-import "@minapp/wx";
-import { Observable } from "rxjs";
+} from '@anyres/core';
+import '@minapp/wx';
+import { Observable } from 'rxjs';
 
 export interface IWepyResponse {
   data: {
@@ -19,8 +19,8 @@ export interface IWepyResponse {
 function paramsToUrl(url: string, params: { [key: string]: string }): string {
   const paramString = Object.keys(params)
     .map((key) => `${key}=${params[key]}`)
-    .join("&");
-  const [base, query] = url.split("?");
+    .join('&');
+  const [base, query] = url.split('?');
   if (query === undefined) {
     return `${base}?${paramString}`;
   } else {
@@ -43,8 +43,8 @@ export class WxAdapter implements IHttpAdapter {
       wx.request({
         url: paramsToUrl(url, options.params),
         header: options.headers,
-        method: "GET",
-        dataType: "json",
+        method: 'GET',
+        dataType: 'json',
         success: (response) => {
           observer.next({
             status: response.statusCode,
@@ -72,8 +72,8 @@ export class WxAdapter implements IHttpAdapter {
         url,
         data: options.body,
         header: options.headers,
-        method: "POST",
-        dataType: "json",
+        method: 'POST',
+        dataType: 'json',
         success: (response) => {
           observer.next({
             status: response.statusCode,
@@ -101,8 +101,8 @@ export class WxAdapter implements IHttpAdapter {
         url,
         data: options.body,
         header: options.headers,
-        method: "PUT",
-        dataType: "json",
+        method: 'PUT',
+        dataType: 'json',
         success: (response) => {
           observer.next({
             status: response.statusCode,
@@ -129,8 +129,8 @@ export class WxAdapter implements IHttpAdapter {
       wx.request({
         url,
         header: options.headers,
-        method: "DELETE",
-        dataType: "json",
+        method: 'DELETE',
+        dataType: 'json',
         success: (response) => {
           observer.next({
             status: response.statusCode,
@@ -158,8 +158,8 @@ export class WxAdapter implements IHttpAdapter {
         url,
         data: options.body,
         header: options.headers,
-        method: "PUT",
-        dataType: "json",
+        method: 'PUT',
+        dataType: 'json',
         success: (response) => {
           observer.next({
             status: response.statusCode,

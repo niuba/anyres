@@ -1,4 +1,4 @@
-import { CacheStore } from "../cache-store";
+import { CacheStore } from '../cache-store';
 
 export interface ICacheParams {
   store: CacheStore;
