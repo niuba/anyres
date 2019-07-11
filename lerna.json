@@ -4,8 +4,8 @@
     "packages/core-cache",
     "packages/core-drf",
     "packages/core-nestjsx-crud",
-    "packages/ng-anyres-lib/projects/anyres/ng-anyres",
-    "packages/mock-restful/projects/anyres/ng-mock-restful"
+    "packages/mock-restful/projects/anyres/ng-mock-restful",
+    "packages/ng-anyres-lib/projects/anyres/ng-anyres"
   ],
   "command": {
     "publish": {
@@ -16,5 +16,5 @@
       "message": "chore(release): publish"
     }
   },
-  "version": "1.0.0-alpha.5"
+  "version": "1.0.0-alpha.6"
 }

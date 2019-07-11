@@ -1,6 +1,6 @@
 {
   "name": "@anyres/ng-mock-restful",
-  "version": "0.3.0-rc1",
+  "version": "1.0.0-alpha.6",
   "scripts": {
     "prepublish": "npm run build",
     "build": "ng build @anyres/ng-mock-restful"
