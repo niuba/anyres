@@ -4,6 +4,8 @@
     "packages/core-cache",
     "packages/core-drf",
     "packages/core-nestjsx-crud",
+    "packages/wepy-adapter",
+    "packages/wx-adapter",
     "packages/mock-restful/projects/anyres/ng-mock-restful",
     "packages/ng-anyres-lib/projects/anyres/ng-anyres"
   ],
