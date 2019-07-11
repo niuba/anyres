@@ -1,14 +1,14 @@
 {
-  "name": "@anyres/ng-anyres",
-  "version": "1.0.0-alpha.5",
+  "name": "@anyres/ng-mock-restful",
+  "version": "0.3.0-rc1",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "ng build @anyres/ng-anyres"
+    "build": "ng build @anyres/ng-mock-restful"
   },
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
     "@anyres/core": "^1.0.0-alpha.1",
-    "rxjs": "^6.0.0"
+    "@delon/mock": "^^7.0.0"
   }
 }
