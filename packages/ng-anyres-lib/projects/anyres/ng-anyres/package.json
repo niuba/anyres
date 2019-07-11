@@ -5,10 +5,19 @@
     "prepublishOnly": "npm run build",
     "build": "ng build @anyres/ng-anyres"
   },
+  "main": "dist/bundles/anyres-ng-anyres.umd.js",
+  "module": "dist/fesm5/anyres-ng-anyres.js",
+  "es2015": "dist/fesm2015/anyres-ng-anyres.js",
+  "esm5": "dist/esm5/anyres-ng-anyres.js",
+  "esm2015": "dist/esm2015/anyres-ng-anyres.js",
+  "fesm5": "dist/fesm5/anyres-ng-anyres.js",
+  "fesm2015": "dist/fesm2015/anyres-ng-anyres.js",
+  "typings": "dist/anyres-ng-anyres.d.ts",
+  "metadata": "dist/anyres-ng-anyres.metadata.json",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
-    "@anyres/core": "^1.0.0-alpha.1",
+    "@anyres/core": "^1.0.0-alpha.8",
     "rxjs": "^6.0.0"
   }
 }

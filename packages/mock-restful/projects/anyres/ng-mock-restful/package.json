@@ -5,10 +5,19 @@
     "prepublishOnly": "npm run build",
     "build": "ng build @anyres/ng-mock-restful"
   },
+  "main": "dist/bundles/anyres-ng-mock-restful.umd.js",
+  "module": "dist/fesm5/anyres-ng-mock-restful.js",
+  "es2015": "dist/fesm2015/anyres-ng-mock-restful.js",
+  "esm5": "dist/esm5/anyres-ng-mock-restful.js",
+  "esm2015": "dist/esm2015/anyres-ng-mock-restful.js",
+  "fesm5": "dist/fesm5/anyres-ng-mock-restful.js",
+  "fesm2015": "dist/fesm2015/anyres-ng-mock-restful.js",
+  "typings": "dist/anyres-ng-mock-restful.d.ts",
+  "metadata": "dist/anyres-ng-mock-restful.metadata.json",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
-    "@anyres/core": "^1.0.0-alpha.1",
+    "@anyres/core": "^1.0.0-alpha.8",
     "@delon/mock": "^^7.0.0"
   }
 }
