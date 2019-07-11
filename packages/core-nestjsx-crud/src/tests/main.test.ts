@@ -1,9 +1,7 @@
 import { Anyres } from '@anyres/core';
-import { AnyresNestjsxCRUD, INestjsxResQuery } from '..';
+import { AnyresNestjsxCRUD } from '..';
 import { MockHttpAdapter } from './MockHttpAdapter';
 
-export interface IPostQuery extends INestjsxResQuery<IPostGet> {
-}
 export interface IPostGet {
   id?: number;
   title?: string;
@@ -20,7 +18,6 @@ export interface IPostUpdate {
   httpAdapterStatic: new MockHttpAdapter(),
 })
 class TestRes extends AnyresNestjsxCRUD<
-IPostQuery,
 IPostGet,
 IPostCreate,
 IPostUpdate

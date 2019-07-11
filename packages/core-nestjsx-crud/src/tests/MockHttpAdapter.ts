@@ -3,14 +3,14 @@ import {
   IAnyresResponse,
   IHttpAdapter,
 } from '@anyres/core';
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export class MockHttpAdapter implements IHttpAdapter {
   public get(
     url: string,
     options?: IAnyresRequestOptions,
   ): Observable<IAnyresResponse> {
-    return observableOf({
+    return of({
       status: 200,
       headers: {},
       body: {
@@ -29,7 +29,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     url: string,
     options?: IAnyresRequestOptions,
   ): Observable<IAnyresResponse> {
-    return observableOf({
+    return of({
       status: 201,
       headers: {},
       body: {
@@ -48,7 +48,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     url: string,
     options?: IAnyresRequestOptions,
   ): Observable<IAnyresResponse> {
-    return observableOf({
+    return of({
       status: 200,
       headers: {},
       body: {
@@ -65,7 +65,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     url: string,
     options?: IAnyresRequestOptions,
   ): Observable<IAnyresResponse> {
-    return observableOf({
+    return of({
       status: 204,
       headers: {},
       body: {},
@@ -78,7 +78,7 @@ export class MockHttpAdapter implements IHttpAdapter {
     url: string,
     options?: IAnyresRequestOptions,
   ): Observable<IAnyresResponse> {
-    return observableOf({
+    return of({
       status: 200,
       headers: {},
       body: {
