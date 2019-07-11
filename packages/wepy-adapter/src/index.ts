@@ -27,7 +27,7 @@ export class WepyAdapter implements IHttpAdapter {
         params: {},
       };
     }
-    return observableFrom<IWepyResponse>(wepy.request({
+    return observableFrom<Promise<IWepyResponse>>(wepy.request({
       url,
       data: options.params,
       header: options.headers,
@@ -53,7 +53,7 @@ export class WepyAdapter implements IHttpAdapter {
         params: {},
       };
     }
-    return observableFrom<IWepyResponse>(wepy.request({
+    return observableFrom<Promise<IWepyResponse>>(wepy.request({
       url,
       data: options.body,
       header: options.headers,
@@ -79,7 +79,7 @@ export class WepyAdapter implements IHttpAdapter {
         params: {},
       };
     }
-    return observableFrom<IWepyResponse>(wepy.request({
+    return observableFrom<Promise<IWepyResponse>>(wepy.request({
       url,
       data: options.body,
       header: options.headers,
@@ -105,7 +105,7 @@ export class WepyAdapter implements IHttpAdapter {
         params: {},
       };
     }
-    return observableFrom<IWepyResponse>(wepy.request({
+    return observableFrom<Promise<IWepyResponse>>(wepy.request({
       url,
       header: options.headers,
       method: "DELETE",
@@ -130,7 +130,7 @@ export class WepyAdapter implements IHttpAdapter {
         params: {},
       };
     }
-    return observableFrom<IWepyResponse>(wepy.request({
+    return observableFrom<Promise<IWepyResponse>>(wepy.request({
       url,
       data: options.body,
       header: options.headers,

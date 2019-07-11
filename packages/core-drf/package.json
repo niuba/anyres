@@ -8,7 +8,7 @@
     "build:cmjs": "tsc -P tsconfig.json",
     "build:es6": "tsc -P tsconfig.json --module ES6 --outDir dist/es6",
     "clean": "rimraf ./dist",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "build": "npm run clean & npm run build:cmjs & npm run build:es6",
     "db": "json-server --watch db.json",
     "pub": "npm publish --scope --access public",
@@ -20,9 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "@anyres/core": "^1.0.0-alpha.2",
-    "rxjs": "^6.3.3",
+    "rxjs": "6.5.2",
     "tslint": "^5.12.1",
-    "typescript": "^3.2.2"
+    "typescript": "3.5.3"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",

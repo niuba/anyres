@@ -24,7 +24,7 @@
     "@anyres/ng-anyres": "^0.2.8-rc0",
     "@delon/mock": "^7.0.0-rc.1",
     "core-js": "^2.5.4",
-    "rxjs": "~6.3.3",
+    "rxjs": "6.5.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

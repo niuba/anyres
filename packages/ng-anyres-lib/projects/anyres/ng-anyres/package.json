@@ -2,7 +2,7 @@
   "name": "@anyres/ng-anyres",
   "version": "1.0.0-alpha.6",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "build": "ng build @anyres/ng-anyres"
   },
   "peerDependencies": {
