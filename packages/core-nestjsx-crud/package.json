@@ -1,6 +1,6 @@
 {
   "name": "@anyres/core-nestjsx-crud",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0",
   "description": "any resource drf",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
@@ -19,7 +19,7 @@
   "author": "niuba <niuba.zbz@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@anyres/core": "^1.0.0-alpha.8",
+    "@anyres/core": "^1.0.0",
     "@nestjsx/crud-request": "^4.1.0",
     "rxjs": "6.5.2",
     "tslint": "^5.12.1",
