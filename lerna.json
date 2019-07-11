@@ -1,6 +1,10 @@
 {
   "packages": [
-    "packages/*"
+    "packages/core",
+    "packages/core-cache",
+    "packages/core-drf",
+    "packages/core-nestjsx-crud",
+    "packages/ng-anyres-lib/projects/anyres/ng-anyres"
   ],
   "command": {
     "publish": {
