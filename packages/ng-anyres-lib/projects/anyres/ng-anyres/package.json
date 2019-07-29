@@ -15,9 +15,9 @@
   "typings": "dist/anyres-ng-anyres.d.ts",
   "metadata": "dist/anyres-ng-anyres.metadata.json",
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0",
-    "@anyres/core": "^1.0.0-alpha.8",
+    "@angular/common": "^7.0.0 || ^8.0.0",
+    "@angular/core": "^7.0.0 || ^8.0.0",
+    "@anyres/core": "^1.0.0",
     "rxjs": "^6.0.0"
   }
 }
