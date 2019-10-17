@@ -1,6 +1,6 @@
 {
   "name": "@anyres/core-cache",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "any resource cache",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
