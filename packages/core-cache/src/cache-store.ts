@@ -1,6 +1,7 @@
 import {
   BehaviorSubject,
   from,
+  isObservable,
   Observable,
   of,
   Subscription,
@@ -58,7 +59,7 @@ export class CacheStore {
     expire: number = 0,
   ): Observable<T> {
     let v$: Observable<T>;
-    if (data instanceof Observable) {
+    if (isObservable(data)) {
       v$ = data;
     } else {
       v$ = of(data);
