@@ -5,10 +5,10 @@
     "packages/core-drf",
     "packages/core-nestjsx-crud",
     "packages/mock-restful/projects/anyres/ng-mock-restful",
+    "packages/nest-adapter",
     "packages/ng-anyres-lib/projects/anyres/ng-anyres",
     "packages/wepy-adapter",
-    "packages/wx-adapter",
-    "packages/nest-adapter"
+    "packages/wx-adapter"
   ],
   "command": {
     "publish": {
@@ -19,5 +19,5 @@
       "message": "chore(release): publish"
     }
   },
-  "version": "1.0.3"
+  "version": "1.0.4"
 }
