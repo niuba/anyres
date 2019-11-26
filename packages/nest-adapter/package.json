@@ -1,6 +1,6 @@
 {
   "name": "@anyres/nest-adapter",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "nest adapter",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
