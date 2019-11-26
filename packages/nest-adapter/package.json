@@ -24,6 +24,7 @@
     "typescript": "3.5.3"
   },
   "devDependencies": {
+    "@types/node": "^12.12.14",
     "rimraf": "^2.6.3"
   }
 }
