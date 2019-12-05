@@ -1,16 +1,14 @@
-
+import * as hash from 'object-hash';
 import { Observable } from 'rxjs';
 import { ICacheParams } from '../interfaces';
 
-export function CustomCache<
-  TI extends any[],
-  >({
-    getKey,
-    store,
-    expire = 0,
-  }: {
-    getKey: (...args: TI) => string,
-  } & ICacheParams) {
+export function CustomCache<TI extends any[]>({
+  getKey,
+  store,
+  expire = 0,
+}: {
+  getKey?: (...args: TI) => string;
+} & ICacheParams) {
   return <TO>(
     target: any,
     propertyKey: string,
@@ -18,8 +16,17 @@ export function CustomCache<
   ) => {
     return {
       value(...args: TI): Observable<TO> {
-        const key = getKey(...args);
-        return store.get<TO>(key, descriptor.value.apply(this, args) as Observable<TO>, expire);
+        let key: string;
+        if (getKey) {
+          key = getKey(...args);
+        } else {
+          key = hash(args);
+        }
+        return store.get<TO>(
+          key,
+          descriptor.value.apply(this, args) as Observable<TO>,
+          expire,
+        );
       },
     };
   };

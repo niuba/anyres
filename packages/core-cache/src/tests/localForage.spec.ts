@@ -139,6 +139,12 @@ IPostUpdate
   public customMethod(id: number) {
     return this.get(id);
   }
+  @CustomCache({
+    store: cacheStore,
+  })
+  public customMethodWhithoutGetkey(id: number) {
+    return this.get(id);
+  }
 }
 
 describe('test MockAdapter', () => {
@@ -161,6 +167,31 @@ describe('test MockAdapter', () => {
     }).then((item) => {
       expect(item.v.id).toBe(1);
       return testRes.customMethod(1).toPromise();
+    }).then((data) => {
+      expect(data.id).toBe(1);
+      expect(data.title).toBe('title');
+      localForage.iterate((value, key, iterationNumber) => {
+        //
+      }).then((x) => {
+        expect(x).toBe(undefined);
+      });
+      localForage.iterate((value, key, iterationNumber) => {
+        if (iterationNumber === 0) {
+          return [key, value];
+        }
+      }).then((x) => {
+        expect(x[0]).toBe('1');
+      });
+    });
+  });
+  test('customMethodWhithoutGetkey', () => {
+    return testRes.customMethodWhithoutGetkey(1).toPromise().then((data) => {
+      expect(data.id).toBe(1);
+      expect(data.title).toBe('title');
+      return localForage.getItem<ICache<IPostGet>>('1');
+    }).then((item) => {
+      expect(item.v.id).toBe(1);
+      return testRes.customMethodWhithoutGetkey(1).toPromise();
     }).then((data) => {
       expect(data.id).toBe(1);
       expect(data.title).toBe('title');
