@@ -84,6 +84,7 @@ export class AnyresCRUD<
 
   public get(
     id,
+    query?: any,
     options: IAnyresRequestOptions = {
       headers: {},
     },
