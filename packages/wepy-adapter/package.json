@@ -1,6 +1,6 @@
 {
   "name": "@anyres/wepy-adapter",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "wepy adapter",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
@@ -17,7 +17,7 @@
   "author": "niuba <niuba.zbz@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@anyres/core": "^1.0.0",
+    "@anyres/core": "^1.0.8",
     "rxjs": "6.5.2",
     "tslint": "^5.9.1",
     "typescript": "3.5.3",
