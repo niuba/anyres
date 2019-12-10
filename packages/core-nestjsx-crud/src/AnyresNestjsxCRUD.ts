@@ -1,4 +1,4 @@
-import { AnyresCRUD } from '@anyres/core';
+import { AnyresCRUD, IAnyresRequestOptions } from '@anyres/core';
 import { RequestQueryBuilder } from '@nestjsx/crud-request';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -21,15 +21,29 @@ export class AnyresNestjsxCRUD<
   TG extends INestjsxResGet,
   TC extends INestjsxResCreate,
   TU extends INestjsxResUpdate
-> extends AnyresCRUD<RequestQueryBuilder, INestjsxResQueryResult<TG>, TG, TC, TU> {
-  public createMany(res: TC[]): Observable<TG[]> {
+> extends AnyresCRUD<
+  RequestQueryBuilder,
+  INestjsxResQueryResult<TG>,
+  TG,
+  TC,
+  TU
+> {
+  public createMany(
+    res: TC[],
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TG[]> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.post(`${this.path}/bulk`, {
           body: {
             bulk: res,
           },
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json() as TG[]),
@@ -40,13 +54,22 @@ export class AnyresNestjsxCRUD<
     );
   }
 
-  public get(id: string | number, query?: RequestQueryBuilder): Observable<TG> {
+  public get(
+    id: string | number,
+    query?: RequestQueryBuilder,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TG> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.get(
           `${this.path}/${id}?${query ? query.query() : ''}`,
           {
-            headers,
+            headers: {
+              ...headers,
+              ...options.headers,
+            },
           },
         );
       }),
@@ -60,13 +83,19 @@ export class AnyresNestjsxCRUD<
 
   public query(
     query?: RequestQueryBuilder,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
   ): Observable<INestjsxResQueryResult<TG>> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.get(
           `${this.path}?${query ? query.query() : ''}`,
           {
-            headers,
+            headers: {
+              ...headers,
+              ...options.headers,
+            },
           },
         );
       }),
