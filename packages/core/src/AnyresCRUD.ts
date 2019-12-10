@@ -1,6 +1,6 @@
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { IHttpAdapter } from './HttpAdapter';
+import { IAnyresRequestOptions, IHttpAdapter } from './HttpAdapter';
 
 export interface IResQuery {}
 
@@ -58,12 +58,20 @@ export class AnyresCRUD<
     });
   }
 
-  public create(res: TC): Observable<TG> {
+  public create(
+    res: TC,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TG> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.post(`${this.path}`, {
           body: res,
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json() as TG),
@@ -74,11 +82,19 @@ export class AnyresCRUD<
     );
   }
 
-  public get(id): Observable<TG> {
+  public get(
+    id,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TG> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.get(`${this.path}/${id}`, {
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json() as TG),
@@ -89,12 +105,20 @@ export class AnyresCRUD<
     );
   }
 
-  public update(res: TU): Observable<TG> {
+  public update(
+    res: TU,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TG> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.patch(`${this.path}/${res[this.primaryKey]}`, {
           body: res,
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json() as TG),
@@ -105,11 +129,19 @@ export class AnyresCRUD<
     );
   }
 
-  public remove(id: string | number): Observable<any> {
+  public remove(
+    id: string | number,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<any> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.delete(`${this.path}/${id}`, {
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json()),
@@ -120,12 +152,20 @@ export class AnyresCRUD<
     );
   }
 
-  public query(query?: TQ): Observable<TQR> {
+  public query(
+    query?: TQ,
+    options: IAnyresRequestOptions = {
+      headers: {},
+    },
+  ): Observable<TQR> {
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         return this.httpAdapter.get(`${this.path}`, {
           params: query || {},
-          headers,
+          headers: {
+            ...headers,
+            ...options.headers,
+          },
         });
       }),
       map((response) => response.json() as TQR),
