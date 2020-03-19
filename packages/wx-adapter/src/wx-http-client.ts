@@ -25,6 +25,11 @@ export class WxHttpClient {
       };
     },
   ): Observable<T> {
+    options = {
+      headers: {},
+      params: {},
+      ...(options || {}),
+    };
     return from(
       new Promise<T>((resolve, reject) => {
         wx.request({
@@ -54,6 +59,12 @@ export class WxHttpClient {
       };
     },
   ): Observable<T> {
+    body = body || {};
+    options = {
+      headers: {},
+      params: {},
+      ...(options || {}),
+    };
     return from(
       new Promise<T>((resolve, reject) => {
         wx.request({
