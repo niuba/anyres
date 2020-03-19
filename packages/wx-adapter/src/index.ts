@@ -172,3 +172,5 @@ export class WxAdapter implements IHttpAdapter {
     });
   }
 }
+export * from './wx-http-client';
+
