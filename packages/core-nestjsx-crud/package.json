@@ -1,6 +1,6 @@
 {
   "name": "@anyres/core-nestjsx-crud",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "description": "any resource drf",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
