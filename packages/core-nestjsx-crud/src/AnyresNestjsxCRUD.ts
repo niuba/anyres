@@ -88,16 +88,18 @@ export class AnyresNestjsxCRUD<
   public query(
     query?: RequestQueryBuilder,
     options: IAnyresRequestOptions = {
+      body: {},
       headers: {},
+      params: {},
     },
-    params: {
-      [key: string]: string;
-    } = {},
   ): Observable<INestjsxResQueryResult<TG>> {
+    options.body = options.body || {};
+    options.headers = options.headers || {};
+    options.params = options.params || {};
     return this.getHeaders$().pipe(
       switchMap((headers) => {
         let url = `${this.path}?${query ? query.query() : ''}`;
-        url = buildParamsToUrl(url, params);
+        url = buildParamsToUrl(url, options.params);
         return this.httpAdapter.get(url, {
           headers: {
             ...headers,
