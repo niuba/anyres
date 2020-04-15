@@ -1,5 +1,24 @@
+import { IAnyresRequestOptions, IAnyresResponse } from '@anyres/core';
 import '@minapp/wx';
 import { from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
+// tslint:disable-next-line: max-classes-per-file
+export class WxHttpClientRequestInterceptor {
+  constructor(
+    public handle: (req: {
+      url: string;
+      options?: IAnyresRequestOptions;
+    }) => Observable<{
+      url: string;
+      options?: IAnyresRequestOptions;
+    }>,
+  ) {}
+}
+// tslint:disable-next-line: max-classes-per-file
+export class WxHttpClientResponseInterceptor {
+  constructor(public handle: (res: IAnyresResponse) => Observable<IAnyresResponse>) {}
+}
 
 function paramsToUrl(url: string, params: { [key: string]: string }): string {
   const paramString = Object.keys(params)
@@ -13,74 +32,128 @@ function paramsToUrl(url: string, params: { [key: string]: string }): string {
   }
 }
 
+// tslint:disable-next-line: max-classes-per-file
 export class WxHttpClient {
-  public get<T>(
-    url: string,
-    options?: {
-      headers?: {
-        [header: string]: string;
-      };
-      params?: {
-        [param: string]: string;
-      };
-    },
-  ): Observable<T> {
+  constructor(
+    private interceptor: {
+      requestInterceptor?: WxHttpClientRequestInterceptor;
+      responseInterceptor?: WxHttpClientResponseInterceptor;
+    } = {},
+  ) {}
+  public get<T>(url: string, options?: IAnyresRequestOptions): Observable<T> {
     options = {
       headers: {},
       params: {},
       ...(options || {}),
     };
-    return from(
-      new Promise<T>((resolve, reject) => {
-        wx.request({
-          url: paramsToUrl(url, options.params),
-          header: options.headers,
-          method: 'GET',
-          dataType: 'json',
-          success: (response) => {
-            resolve(response.data);
-          },
-          fail: (err) => {
-            reject(err);
-          },
-        });
+    let newReq: Observable<{
+      url: string;
+      options?: IAnyresRequestOptions;
+    }> = Observable.create((observer) => {
+      observer.next({
+        url,
+        options,
+      });
+    });
+    if (this.interceptor.requestInterceptor) {
+      newReq = this.interceptor.requestInterceptor.handle({
+        url,
+        options,
+      });
+    }
+    return newReq.pipe(
+      switchMap((req) => {
+        return from(
+          new Promise<IAnyresResponse>((resolve, reject) => {
+            wx.request({
+              url: paramsToUrl(req.url, req.options.params),
+              header: req.options.headers,
+              method: 'GET',
+              dataType: 'json',
+              success: (response) => {
+                resolve({
+                  status: response.statusCode,
+                  headers: response.header,
+                  body: response.data,
+                  json: () => response.data,
+                });
+              },
+              fail: (err) => {
+                reject(err);
+              },
+            });
+          }),
+        );
       }),
+      switchMap((response) => {
+        let newRes: Observable<IAnyresResponse> = Observable.create((observer) => {
+          observer.next(response);
+        });
+        if (this.interceptor.responseInterceptor) {
+          newRes = this.interceptor.responseInterceptor.handle(response);
+        }
+        return newRes;
+      }),
+      map((res) => res.body as T),
     );
   }
-  public post<T>(
-    url: string,
-    body: any | null,
-    options?: {
-      headers?: {
-        [header: string]: string;
-      };
-      params?: {
-        [param: string]: string;
-      };
-    },
-  ): Observable<T> {
-    body = body || {};
+  public post<T>(url: string, body: any | null, options?: IAnyresRequestOptions): Observable<T> {
     options = {
       headers: {},
       params: {},
+      body: body || {},
       ...(options || {}),
     };
-    return from(
-      new Promise<T>((resolve, reject) => {
-        wx.request({
-          url,
-          data: body,
-          header: options.headers,
-          method: 'POST',
-          dataType: 'json',
-          success: (response) => {
-            resolve(response.data);
-          },
-          fail: (err) => {
-            reject(err);
-          },
-        });
+    let newReq: Observable<{
+      url: string;
+      options?: IAnyresRequestOptions;
+    }> = Observable.create((observer) => {
+      observer.next({
+        url,
+        options,
+      });
+    });
+    if (this.interceptor.requestInterceptor) {
+      newReq = this.interceptor.requestInterceptor.handle({
+        url,
+        options,
+      });
+    }
+    return newReq.pipe(
+      switchMap((req) => {
+        return from(
+          new Promise<IAnyresResponse>((resolve, reject) => {
+            wx.request({
+              url: paramsToUrl(req.url, req.options.params),
+              header: req.options.headers,
+              data: req.options.body,
+              method: 'POST',
+              dataType: 'json',
+              success: (response) => {
+                resolve({
+                  status: response.statusCode,
+                  headers: response.header,
+                  body: response.data,
+                  json: () => response.data,
+                });
+              },
+              fail: (err) => {
+                reject(err);
+              },
+            });
+          }),
+        );
       }),
+      switchMap((response) => {
+        let newRes: Observable<IAnyresResponse> = Observable.create((observer) => {
+          observer.next(response);
+        });
+        if (this.interceptor.responseInterceptor) {
+          newRes = this.interceptor.responseInterceptor.handle(response);
+        }
+        return newRes;
+      }),
+      map((res) => res.body as T),
     );
   }
 }
