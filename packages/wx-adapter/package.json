@@ -1,6 +1,6 @@
 {
   "name": "@anyres/wx-adapter",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "wx adapter",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
