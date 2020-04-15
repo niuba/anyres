@@ -41,8 +41,8 @@ export class WxAdapter implements IHttpAdapter {
           return {
             status: 200,
             headers: {},
-            body: response.data,
-            json: () => response.data,
+            body: response,
+            json: () => response,
           };
         }),
       );
@@ -78,8 +78,8 @@ export class WxAdapter implements IHttpAdapter {
           return {
             status: 200,
             headers: {},
-            body: response.data,
-            json: () => response.data,
+            body: response,
+            json: () => response,
           };
         }),
       );
@@ -116,8 +116,8 @@ export class WxAdapter implements IHttpAdapter {
           return {
             status: 200,
             headers: {},
-            body: response.data,
-            json: () => response.data,
+            body: response,
+            json: () => response,
           };
         }),
       );
@@ -154,8 +154,8 @@ export class WxAdapter implements IHttpAdapter {
           return {
             status: 200,
             headers: {},
-            body: response.data,
-            json: () => response.data,
+            body: response,
+            json: () => response,
           };
         }),
       );
@@ -191,8 +191,8 @@ export class WxAdapter implements IHttpAdapter {
           return {
             status: 200,
             headers: {},
-            body: response.data,
-            json: () => response.data,
+            body: response,
+            json: () => response,
           };
         }),
       );
