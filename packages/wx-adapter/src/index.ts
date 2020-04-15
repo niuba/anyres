@@ -1,10 +1,8 @@
-import {
-  IAnyresRequestOptions,
-  IAnyresResponse,
-  IHttpAdapter,
-} from '@anyres/core';
+import { IAnyresRequestOptions, IAnyresResponse, IHttpAdapter } from '@anyres/core';
 import '@minapp/wx';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { WxHttpClient } from './wx-http-client';
 
 export interface IWepyResponse {
   data: {
@@ -29,16 +27,26 @@ function paramsToUrl(url: string, params: { [key: string]: string }): string {
 }
 
 export class WxAdapter implements IHttpAdapter {
-  public get(
-    url: string,
-    options?: IAnyresRequestOptions,
-  ): Observable<IAnyresResponse> {
+  constructor(public wxHttpClient?: WxHttpClient) {}
+  public get(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     options = {
       headers: {},
       params: {},
       body: {},
       ...(options || {}),
     };
+    if (this.wxHttpClient) {
+      return this.wxHttpClient.get<any>(url, options).pipe(
+        map((response) => {
+          return {
+            status: 200,
+            headers: {},
+            body: response.data,
+            json: () => response.data,
+          };
+        }),
+      );
+    }
     return Observable.create((observer) => {
       wx.request({
         url: paramsToUrl(url, options.params),
@@ -57,16 +65,25 @@ export class WxAdapter implements IHttpAdapter {
     });
   }
 
-  public post(
-    url: string,
-    options?: IAnyresRequestOptions,
-  ): Observable<IAnyresResponse> {
+  public post(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     options = {
       headers: {},
       params: {},
       body: {},
       ...(options || {}),
     };
+    if (this.wxHttpClient) {
+      return this.wxHttpClient.post<any>(url, options.body, options).pipe(
+        map((response) => {
+          return {
+            status: 200,
+            headers: {},
+            body: response.data,
+            json: () => response.data,
+          };
+        }),
+      );
+    }
     return Observable.create((observer) => {
       wx.request({
         url,
@@ -86,16 +103,25 @@ export class WxAdapter implements IHttpAdapter {
     });
   }
 
-  public put(
-    url: string,
-    options?: IAnyresRequestOptions,
-  ): Observable<IAnyresResponse> {
+  public put(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     options = {
       headers: {},
       params: {},
       body: {},
       ...(options || {}),
     };
+    if (this.wxHttpClient) {
+      return this.wxHttpClient.put<any>(url, options.body, options).pipe(
+        map((response) => {
+          return {
+            status: 200,
+            headers: {},
+            body: response.data,
+            json: () => response.data,
+          };
+        }),
+      );
+    }
     return Observable.create((observer) => {
       wx.request({
         url,
@@ -115,16 +141,25 @@ export class WxAdapter implements IHttpAdapter {
     });
   }
 
-  public delete(
-    url: string,
-    options?: IAnyresRequestOptions,
-  ): Observable<IAnyresResponse> {
+  public delete(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     options = {
       headers: {},
       params: {},
       body: {},
       ...(options || {}),
     };
+    if (this.wxHttpClient) {
+      return this.wxHttpClient.delete<any>(url, options).pipe(
+        map((response) => {
+          return {
+            status: 200,
+            headers: {},
+            body: response.data,
+            json: () => response.data,
+          };
+        }),
+      );
+    }
     return Observable.create((observer) => {
       wx.request({
         url,
@@ -143,16 +178,25 @@ export class WxAdapter implements IHttpAdapter {
     });
   }
 
-  public patch(
-    url: string,
-    options?: IAnyresRequestOptions,
-  ): Observable<IAnyresResponse> {
+  public patch(url: string, options?: IAnyresRequestOptions): Observable<IAnyresResponse> {
     options = {
       headers: {},
       params: {},
       body: {},
       ...(options || {}),
     };
+    if (this.wxHttpClient) {
+      return this.wxHttpClient.patch<any>(url, options.body, options).pipe(
+        map((response) => {
+          return {
+            status: 200,
+            headers: {},
+            body: response.data,
+            json: () => response.data,
+          };
+        }),
+      );
+    }
     return Observable.create((observer) => {
       wx.request({
         url,
