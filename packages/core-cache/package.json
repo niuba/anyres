@@ -1,6 +1,6 @@
 {
   "name": "@anyres/core-cache",
-  "version": "1.0.8",
+  "version": "1.0.15",
   "description": "any resource cache",
   "main": "./dist/cmjs/index.js",
   "module": "./dist/es6/index.js",
@@ -30,7 +30,7 @@
   "author": "niuba <niuba.zbz@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@anyres/core": "^1.0.8",
+    "@anyres/core": "^1.0.15",
     "localforage": "^1.7.3",
     "object-hash": "^2.0.1",
     "rxjs": "6.6.3",
